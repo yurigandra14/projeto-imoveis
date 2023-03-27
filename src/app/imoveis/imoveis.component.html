@@ -1,0 +1,161 @@
+<div class="container">
+  <div class="p-grid">
+    <p-card header="Imóveis"></p-card>
+    <div class="col-12">
+      <p-table responsiveLayout="scroll" [value]="imoveis" [paginator]="true" [rows]="4">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Quartos</th>
+            <th>Banheiros</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Mobiliado</th>
+            <th>Área</th>
+            <th>Venda/Aluguel</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-imovel>
+          <tr>
+            <td>{{imovel.nome}}</td>
+            <td>{{imovel.quartos}}</td>
+            <td>{{imovel.banheiros}}</td>
+            <td>{{imovel.valor}}</td>
+            <td>{{imovel.tipo}}</td>
+            <td>{{imovel.mobiliado ? "Sim" : "Não"}}</td>
+            <td>{{imovel.area}}</td>
+            <td>{{imovel.venda ? "Venda" : "Aluguel"}}</td>
+            <td >
+              <a (click)="visualizarImovel(imovel.id)" pButton class="btn-visualizar"><i class="pi pi-eye"></i></a>
+              <a (click)="excluirImovel(imovel.id)" pButton> <i class="pi pi-trash"></i></a>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="button-margin">
+      <p-button (click)="adicionarImovel()" styleClass="p-button-success" icon="pi pi-plus" label="Adicionar Imóvel"></p-button>
+    </div>
+  </div>
+</div>
+<p-dialog [closable]="true"
+  [draggable]="false"
+  [visible]="visualizar"
+  (onHide)="fecharVisualizacao()">
+  <p-header>
+    Informações do Imóvel
+  </p-header>
+  <div>
+    <label>Nome: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.nome" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Mobiliado: </label>
+    <input pInputText class="input-dialog" [value]="imovel.mobiliado ? 'Sim' : 'Não'" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Tipo: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.tipo" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Área: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.area" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Banheiros: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.banheiros" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Condominio: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.condominio" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Data Anuncio: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.dataAnuncio" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Quartos: </label>
+    <input pInputText class="input-dialog" [(ngModel)]="imovel.quartos" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Venda/Aluguel: </label>
+    <input pInputText class="input-dialog" [value]="imovel.venda ? 'Venda' : 'Aluguel'" [disabled]="true"/>
+  </div>
+  <div>
+    <label>Endereço: </label>
+    <input pInputText class="input-dialog" [value]="imovel.endereco ? imovel.endereco.rua : null" [disabled]="true"/>
+  </div>
+  <div>
+    <p-button (click)="fecharVisualizacao()" styleClass="p-button-danger" icon="pi pi-plus" label="Fechar Visualização"></p-button>
+  </div>
+</p-dialog>
+
+<p-dialog [closable]="true"
+          [draggable]="false"
+          [visible]="addImovel"
+          (onHide)="fechar()">
+  <p-header>
+    Adicionar Imóvel
+  </p-header>
+  <div>
+    <div>
+      <label>Nome: </label>
+      <input pInputText class="input-dialog" [(ngModel)]="imovel.nome">
+    </div>
+    <div>
+      <label>Mobiliado: </label>
+      <div>
+        <p-radioButton name="mobiliado" value="true" (click)="setarMobiliadoTrue()" [(ngModel)]="ehMobiliado"></p-radioButton>
+        <label>Sim</label>
+        <p-radioButton name="mobiliado" value="false" (click)="setarMobiliadoFalse()" [(ngModel)]="ehMobiliado"></p-radioButton>
+        <label>Não</label>
+      </div>
+    </div>
+    <div>
+      <label>Tipo: </label>
+      <input pInputText class="input-dialog" [(ngModel)]="tipo"/>
+    </div>
+    <div>
+      <label>Área: </label>
+      <input pInputText class="input-dialog" [(ngModel)]="imovel.area"/>
+    </div>
+    <div>
+      <label>Banheiros: </label>
+      <input pInputText class="input-dialog" [(ngModel)]="imovel.banheiros"/>
+    </div>
+    <div>
+      <label>Condominio: </label>
+      <input pInputText class="input-dialog" [(ngModel)]="imovel.condominio"/>
+    </div>
+    <div>
+      <label>Data Anuncio: </label>
+      <input pInputText type="date" class="input-dialog" [(ngModel)]="imovel.dataAnuncio"/>
+    </div>
+    <div>
+      <label>Quartos: </label>
+      <input pInputText class="input-dialog" [(ngModel)]="imovel.quartos"/>
+    </div>
+    <div>
+      <label>Venda/Aluguel: </label>
+      <div>
+        <p-radioButton name="venda-aluguel" value="true" (click)="ehVenda()" [(ngModel)]="ehAlugar"></p-radioButton>
+        <label>Venda</label>
+        <p-radioButton name="venda-aluguel" value="false" (click)="ehAluguel()" [(ngModel)]="ehAlugar"></p-radioButton>
+        <label>Aluguel</label>
+      </div>
+    </div>
+    <div>
+      <label>Cep: </label>
+      <input pInputText class="input-dialog" maxlength="8" [(ngModel)]="cep"/>
+    </div>
+    <div>
+      <label>Valor: </label>
+      <input pInputText class="input-dialog" maxlength="8" [(ngModel)]="imovel.valor"/>
+    </div>
+  </div>
+  <div>
+    <p-button class="input-dialog" (click)="incluirImovel()" styleClass="p-button-success" icon="pi pi-plus" label="Adicionar Imóvel"></p-button>
+    <p-button (click)="fechar()" styleClass="p-button-danger" icon="pi pi-plus" label="Cancelar"></p-button>
+  </div>
+</p-dialog>

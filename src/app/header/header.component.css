@@ -1,0 +1,28 @@
+nav {
+  background-color: white;
+  padding: 10px;
+  box-shadow: 2px 2px 10px #888;
+  transform: scale(1);
+}
+
+nav img {
+  width: 200px;
+}
+
+nav ul {
+  float: right;
+  list-style-type: none;
+}
+
+ul li {
+  display: inline-block;
+  padding: 10px;
+}
+
+li a {
+  color: #0c543c;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: Calibri, serif;
+  font-size: 20px;
+}
